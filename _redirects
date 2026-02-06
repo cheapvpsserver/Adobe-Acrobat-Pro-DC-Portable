@@ -2,7 +2,4 @@
 /*    /index.html   200
 
 
-# 明确的下载路径规则（确保英文路径始终返回英文版本）
-/en/acrobat-portable-windows   /en/index.html   200
-/en/acrobat-portable-macos   /en/index.html   200
 
