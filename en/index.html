@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 终极兜底：强制锁死英文站，刷新/路径错误都不会跳中文，适配二级域名 -->
+    <script>
+        // 强制判断：只要路径不是/en/开头，直接跳转到二级域名的/en/路径，永久锁死
+        if (!window.location.pathname.startsWith('/en/')) {
+            const newPath = window.location.pathname === '/' ? '/en/' : '/en' + window.location.pathname;
+            window.location.href = window.location.origin + newPath;
+            window.stop(); // 强制终止后续加载，防止跳转中断
+        }
+        window.isEnglishVersion = true; // 标记英文站，语言切换用
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adobe Acrobat Pro DC Portable - Professional PDF Editing and Management Tool | Supports Windows and macOS versions</title>
     <meta name="description" content="Adobe Acrobat Pro DC Portable is a professional PDF editing and management tool that supports Windows and macOS systems, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
-    <!-- 修复：资源路径改为绝对路径，适配Cloudflare重写后相对路径错乱问题 -->
+    <!-- 绝对路径资源，适配二级域名根目录 -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-    <!-- 禁止Cloudflare缓存，保留 -->
+    <!-- 禁止缓存，避免旧页面残留 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!-- 核心：适配Cloudflare SPA规则的英文站判断，仅判断是否以/en/开头，无其他跳转 -->
-    <script>
-        // 仅标记为英文站，不再做页面跳转（跳转交给Cloudflare规则+语言切换按钮）
-        window.isEnglishVersion = true;
-    </script>
-    <!-- 外部资源保留，绝对路径 -->
+    <!-- 外部样式 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 右键/复制/开发者工具禁用，保留 -->
+    <!-- 禁用右键/复制/开发者工具 -->
     <script>
      document.addEventListener('contextmenu', function(e) {e.preventDefault();alert('Right-click menu is disabled');});
      document.addEventListener('selectstart', function(e) {e.preventDefault();});
@@ -30,7 +35,6 @@
          if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {e.preventDefault();alert('Developer tools are disabled');}
      });
     </script>
-    <!-- 所有样式保留，无修改 -->
     <style>
     * {margin: 0;padding: 0;box-sizing: border-box;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;}
     body {background-color: #f5f8ff;color: #333;line-height: 1.6;}
@@ -114,16 +118,10 @@
       .btn {display: block;width: 100%;}
     }
   </style>
-     <!-- 👇👇👇 替换成这1行JS就行，纯静态兜底不用加了，这行更适配二级域名 -->
-    <script>if (!window.location.pathname.startsWith('/en/')) { window.location.href = window.location.origin + '/en/' + window.location.pathname.replace(/^\//, ''); }</script>
-    <!-- 👆👆👆 这行是核心，其他原有代码全部保留，一个字都不用改 -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <nav>
     <div class="nav-container">
-      <!-- 修复：logo链接指向英文站根目录 /en/ -->
       <a href="/en/" class="nav-logo">
         <img src="/images/logo.png" alt="HitPaw Screen Recorder" class="nav-logo-img">
       </a>
@@ -139,11 +137,10 @@
       <h1>Adobe Acrobat Pro DC Portable - Professional PDF Editing and Management Tool</h1>
       <div style="display: none;">ENGLISH_VERSION</div>
       <div class="download-buttons">
-        <!-- 所有内部链接保留 /en/ 前缀，适配Cloudflare重写 -->
-        <a href="/en/acrobat-portable-windows" class="btn btn-outline" data-platform="windows" data-title="Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
+        <a href="javascript:;" class="btn btn-outline" data-slug="acrobat-portable-windows" data-platform="windows" data-title="Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
           <i class="fab fa-windows"></i> Windows
         </a>
-        <a href="/en/acrobat-portable-macos" class="btn btn-outline" data-platform="macos" data-title="Adobe Acrobat Pro DC Portable macOS Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
+        <a href="javascript:;" class="btn btn-outline" data-slug="acrobat-portable-macos" data-platform="macos" data-title="Adobe Acrobat Pro DC Portable macOS Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
           <i class="fab fa-apple"></i> macOS
         </a>
         <a href="https://all.calipertools.com" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
@@ -166,7 +163,7 @@
           <p>Adobe Acrobat Pro DC Portable runs directly without installation, taking up no system resources and leaving no registry traces. You can carry it on a USB drive or external storage device, using it on any compatible computer at any time.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/1.png" alt="No Installation Required, Portable Operation" class="feature-screenshot">
+          <img src="/images/img/1.png" alt="No Installation Required, Portable Operation" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card reverse">
@@ -175,7 +172,7 @@
           <p>Adobe Acrobat Pro DC Portable creates high-quality PDF documents from various file formats and provides powerful PDF editing features, including text modification, image editing, and page adjustment, allowing you to easily edit PDF content.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/2.png" alt="PDF Creation and Editing" class="feature-screenshot">
+          <img src="/images/img/2.png" alt="PDF Creation and Editing" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card">
@@ -184,7 +181,7 @@
           <p>Adobe Acrobat Pro DC Portable offers a rich set of annotation tools, including highlights, underlines, strikethroughs, text boxes, arrows, shapes, and more, allowing you to easily mark up and comment on PDF documents, improving collaboration efficiency.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/3.png" alt="PDF Annotation and Markup" class="feature-screenshot">
+          <img src="/images/img/3.png" alt="PDF Annotation and Markup" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card reverse">
@@ -193,7 +190,7 @@
           <p>Adobe Acrobat Pro DC Portable supports creating and applying electronic signatures, allowing you to quickly sign PDF documents without printing and scanning. You can also send documents for others to sign and track signature status.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/4.png" alt="PDF Electronic Signatures" class="feature-screenshot">
+          <img src="/images/img/4.png" alt="PDF Electronic Signatures" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card">
@@ -202,7 +199,7 @@
           <p>Adobe Acrobat Pro DC Portable can convert PDFs to editable formats like Word, Excel, and PowerPoint, and export other file formats to PDF. It supports batch conversion, improving work efficiency while maintaining portability.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/5.png" alt="PDF Conversion and Export" class="feature-screenshot">
+          <img src="/images/img/5.png" alt="PDF Conversion and Export" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card reverse">
@@ -211,7 +208,7 @@
           <p>Adobe Acrobat Pro DC Portable provides multiple security features, including password protection, permission settings, and sensitive information removal, ensuring the security of your PDF documents and preventing unauthorized access and modification.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/6.png" alt="Secure Document Protection" class="feature-screenshot">
+          <img src="/images/img/6.png" alt="Secure Document Protection" class="feature-screenshot" loading="lazy">
         </div>
       </div>
       <div class="feature-card">
@@ -220,7 +217,7 @@
           <p>Adobe Acrobat Pro DC Portable can be used across different devices without installation. Simply carry it on a portable storage device and run it on any Windows or macOS computer, maintaining consistent functionality and user experience.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="/images/img/7.png" alt="Cross-device Portable Use" class="feature-screenshot">
+          <img src="/images/img/7.png" alt="Cross-device Portable Use" class="feature-screenshot" loading="lazy">
         </div>
       </div>
     </section>
@@ -228,10 +225,10 @@
     <section class="cta" id="download-section">
       <h2>Start Using Adobe Acrobat Pro DC Portable to Edit and Manage Your PDF Documents!</h2>
       <div class="download-buttons">
-        <a href="/en/acrobat-portable-windows" class="btn btn-outline" data-platform="windows" data-title="Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
+        <a href="javascript:;" class="btn btn-outline" data-slug="acrobat-portable-windows" data-platform="windows" data-title="Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
           <i class="fab fa-windows"></i> Windows
         </a>
-        <a href="/en/acrobat-portable-macos" class="btn btn-outline" data-platform="macos" data-title="Adobe Acrobat Pro DC Portable macOS Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
+        <a href="javascript:;" class="btn btn-outline" data-slug="acrobat-portable-macos" data-platform="macos" data-title="Adobe Acrobat Pro DC Portable macOS Download | Professional PDF Editing and Management Tool" data-description="Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.">
           <i class="fab fa-apple"></i> macOS
         </a>
         <a href="https://all.calipertools.com" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
@@ -242,12 +239,10 @@
 
     <footer>
       <div class="footer-links">
-        <!-- 底部链接可选指向英文站，也可保留原链接 -->
         <a href="https://www.calipertools.com/en/">CaliperTools</a>
         <a href="https://emoji.calipertools.com/en/">Emoji</a>
         <a href="https://IndexTTS.calipertools.com/en/">IndexTTS</a>
         <a href="https://VoxCPM.calipertools.com/en/">VoxCPM</a>
-        <a href="https://CosyVoice.calipertools.com/en/">CosyVoice</a>
       </div>
       <p>© 2025 CaliperTools. All rights reserved. Precision tools for everyone.</p>
     </footer>
@@ -272,7 +267,7 @@
   </div>
 
   <script>
-    // 平滑滚动，保留
+    // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -280,16 +275,7 @@
       });
     });
 
-    // 图片懒加载，保留
-    if ('loading' in HTMLImageElement.prototype) {
-      document.querySelectorAll('img').forEach(img => {img.loading = 'lazy';});
-    } else {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-      document.body.appendChild(script);
-    }
-
-    // 回到顶部，保留
+    // 回到顶部
     const backToTopBtn = document.getElementById('back-to-top');
     const langSwitchBtn = document.getElementById('language-switch');
     window.addEventListener('scroll', function() {
@@ -299,102 +285,70 @@
       window.scrollTo({top: 0, behavior: 'smooth'});
     });
 
-    // 语言切换，保留（EN→中文根目录 / ，中文→/en/）
+    // 语言切换：EN→中文根目录，中文→EN
     langSwitchBtn.addEventListener('click', function() {
-      window.location.href = window.isEnglishVersion ? '/' : '/en/';
+      window.location.href = window.location.origin + '/';
     });
 
-    // 下载弹窗逻辑，适配Cloudflare SPA规则（虚拟路径）
+    // 下载弹窗核心逻辑（纯前端，无路由跳转，彻底避免CF问题）
     const downloadModal = document.getElementById('download-modal');
     const closeModal = document.getElementById('close-modal');
-    const en_downloadOptionsContainer = document.getElementById('download-options');
-    const en_downloadButtons = document.querySelectorAll('.download-buttons .btn');
+    const downloadOptionsContainer = document.getElementById('download-options');
+    const downloadButtons = document.querySelectorAll('.download-buttons a[data-slug]');
 
-    // 英文站下载数据，保留
-    const en_featureData = {
+    // 下载数据
+    const featureData = {
       'acrobat-portable-windows': {
-        platform: 'windows',
-        title: 'Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool',
-        description: 'Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.',
         links: {'TeraBox': 'https://1024terabox.com/s/1a6e6yQejPozoyl3HOt7kqQ'}
       },
       'acrobat-portable-macos': {
-        platform: 'macos',
-        title: 'Adobe Acrobat Pro DC Portable macOS Download | Professional PDF Editing and Management Tool',
-        description: 'Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.',
         links: {'TeraBox': 'https://1024terabox.com/s/188ZnHCUazAei_2N8To7gyg'}
       }
     };
 
-    // 从URL提取虚拟路径（适配Cloudflare /en/xxx → /en/index.html）
-    function en_getCurrentFeature() {
-      const path = window.location.pathname.replace('/en/', '').replace(/\/$/, '');
-      return en_featureData[path] || null;
-    }
-
-    // 生成下载选项，保留
-    function en_generateDownloadOptions(feature) {
-      en_downloadOptionsContainer.innerHTML = '';
-      for (const [name, url] of Object.entries(feature.links)) {
+    // 生成下载选项
+    function generateDownloadOptions(slug) {
+      const data = featureData[slug];
+      if (!data) return;
+      downloadOptionsContainer.innerHTML = '';
+      for (const [name, url] of Object.entries(data.links)) {
         const optionItem = document.createElement('div');
         optionItem.className = 'option-item';
         optionItem.innerHTML = `<span class="option-name">${name}</span><a href="${url}" class="btn btn-blue option-btn" target="_blank" rel="noopener noreferrer nofollow">Download</a>`;
-        en_downloadOptionsContainer.appendChild(optionItem);
+        downloadOptionsContainer.appendChild(optionItem);
       }
+      // 显示弹窗
+      downloadModal.style.display = 'block';
     }
 
-    // 更新页面标题/描述，保留
-    function en_updatePageInfo(feature) {
-      if (feature.title) document.title = feature.title;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc && feature.description) metaDesc.content = feature.description;
-    }
-
-    // 初始化页面，适配虚拟路径
-    function en_initPage() {
-      const feature = en_getCurrentFeature();
-      if (feature) {
-        en_updatePageInfo(feature);
-        const button = document.querySelector(`.download-buttons .btn[data-platform="${feature.platform}"]`);
-        if (button) {
-          en_downloadButtons.forEach(btn => {btn.classList.remove('btn-blue');btn.classList.add('btn-outline');});
-          button.classList.remove('btn-outline');button.classList.add('btn-blue');
-          const linkCount = Object.keys(feature.links).length;
-          if (linkCount > 1) {en_generateDownloadOptions(feature);downloadModal.style.display = 'block';}
-        }
-      }
-    }
-
-    // 下载按钮点击事件，适配SPA虚拟路径（history.pushState保留/en/前缀）
-    en_downloadButtons.forEach(button => {
+    // 下载按钮点击事件（纯前端，无href跳转，仅触发弹窗）
+    downloadButtons.forEach(button => {
       button.addEventListener('click', function(e) {
-        if (this.getAttribute('href') === 'https://all.calipertools.com') return;
         e.preventDefault();
-        const platform = this.getAttribute('data-platform');
-        const slug = `acrobat-portable-${platform}`;
-        const feature = en_featureData[slug];
-        if (feature) {
-          // 路由跳转保留/en/前缀，适配Cloudflare
-          history.pushState({slug}, feature.title, `/en/${slug}`);
-          en_updatePageInfo(feature);
-          en_downloadButtons.forEach(btn => {btn.classList.remove('btn-blue');btn.classList.add('btn-outline');});
-          this.classList.remove('btn-outline');this.classList.add('btn-blue');
-          const linkCount = Object.keys(feature.links).length;
-          if (linkCount === 1) {
-            window.open(Object.values(feature.links)[0], '_blank', 'noopener,noreferrer');
-          } else {
-            en_generateDownloadOptions(feature);
-            downloadModal.style.display = 'block';
-          }
-        }
+        // 重置所有按钮样式
+        downloadButtons.forEach(btn => {
+          btn.classList.remove('btn-blue');
+          btn.classList.add('btn-outline');
+        });
+        // 高亮当前点击按钮
+        this.classList.remove('btn-outline');
+        this.classList.add('btn-blue');
+        // 获取slug，生成下载选项
+        const slug = this.getAttribute('data-slug');
+        generateDownloadOptions(slug);
       });
     });
 
-    // 关闭弹窗，保留
+    // 关闭弹窗
     closeModal.addEventListener('click', () => {downloadModal.style.display = 'none';});
     window.addEventListener('click', (e) => {if (e.target === downloadModal) downloadModal.style.display = 'none';});
-    window.addEventListener('popstate', en_initPage);
-    window.addEventListener('DOMContentLoaded', en_initPage);
+
+    // 图片懒加载兜底
+    if (!('loading' in HTMLImageElement.prototype)) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+      document.body.appendChild(script);
+    }
   </script>
 </body>
 </html>
