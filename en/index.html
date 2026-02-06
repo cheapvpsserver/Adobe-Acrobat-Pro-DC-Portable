@@ -923,15 +923,7 @@
     
     // Get current feature from URL
     function getCurrentFeature() {
-      // First check hash for feature slug
-      if (window.location.hash) {
-        const slug = window.location.hash.substring(1);
-        if (featureData[slug]) {
-          return featureData[slug];
-        }
-      }
-      
-      // If no hash, check pathname
+      // Check pathname for feature slug
       const path = window.location.pathname.replace(/\/$/, '');
       const parts = path.split('/');
       const slug = parts.pop();
@@ -1042,8 +1034,8 @@
         const feature = featureData[slug];
         
         if (feature) {
-          // Update page URL with hash instead of path to ensure server serves correct language
-          const newUrl = `/en/#${slug}`;
+          // Update page URL without refreshing page
+          const newUrl = `/en/${slug}`;
           history.pushState({ slug }, feature.title, newUrl);
           
           // Update page title and description
