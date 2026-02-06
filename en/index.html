@@ -13,7 +13,34 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon.png">
     <!-- Import Font Awesome icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <script>
+     // 1. Disable right-click menu
+     document.addEventListener('contextmenu', function(e) {
+         e.preventDefault();
+         alert('Right-click menu is disabled');
+     });
+
+     // 2. Disable text selection
+     document.addEventListener('selectstart', function(e) {
+         e.preventDefault();
+     });
+
+     // 3. Disable copy shortcuts
+     document.addEventListener('keydown', function(e) {
+         if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
+             e.preventDefault();
+             alert('Copy function is disabled');
+         }
+     });
+
+     // 4. Prevent opening developer tools via F12
+     document.addEventListener('keydown', function(e) {
+         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+             e.preventDefault();
+             alert('Developer tools are disabled');
+         }
+     });
+ </script>
     <style>
     /* Basic style reset */
     * {
@@ -897,11 +924,10 @@
     // Get current feature from URL
     function getCurrentFeature() {
       const path = window.location.pathname.replace(/\/$/, '');
-      // Check if path contains acrobat-portable patterns
-      const slugMatch = path.match(/acrobat-portable-(windows|macos)/);
+      // Extract slug by checking all possible patterns
+      const slugMatch = path.match(/(acrobat-portable-(windows|macos))/);
       if (slugMatch) {
-        const slug = `acrobat-portable-${slugMatch[1]}`;
-        return featureData[slug];
+        return featureData[slugMatch[1]];
       }
       return null;
     }
@@ -922,13 +948,6 @@
       for (const [name, url] of Object.entries(links)) {
         const optionItem = document.createElement('div');
         optionItem.className = 'option-item';
-        
-        // Get display name based on platform
-        const platformName = {
-          'windows-64': 'Windows 64-bit',
-          'windows-32': 'Windows 32-bit',
-          'windows-portable': 'Windows 64-bit Portable Version'
-        }[feature.platform];
         
         // Use original link, no platform information added
         optionItem.innerHTML = `
@@ -956,6 +975,7 @@
     
     // Initialize page, display corresponding content based on URL
     function initPage() {
+      // Force English content regardless of URL
       const feature = getCurrentFeature();
       if (feature) {
         // Update page title and description
@@ -1010,8 +1030,8 @@
         const feature = featureData[slug];
         
         if (feature) {
-          // Update page URL without refreshing page// 更新页面URL但不刷新页面
-          const newUrl = `/en/${slug}`;
+          // Update page URL without refreshing page
+          const newUrl = `acrobat-portable-${platform}`;
           history.pushState({ slug }, feature.title, newUrl);
           
           // Update page title and description
