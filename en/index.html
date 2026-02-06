@@ -114,6 +114,11 @@
       .btn {display: block;width: 100%;}
     }
   </style>
+     <!-- 👇👇👇 替换成这1行JS就行，纯静态兜底不用加了，这行更适配二级域名 -->
+    <script>if (!window.location.pathname.startsWith('/en/')) { window.location.href = window.location.origin + '/en/' + window.location.pathname.replace(/^\//, ''); }</script>
+    <!-- 👆👆👆 这行是核心，其他原有代码全部保留，一个字都不用改 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <nav>
