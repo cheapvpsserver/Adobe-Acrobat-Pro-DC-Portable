@@ -826,7 +826,7 @@
   </div>
 
   <script>
-    // Function to check language consistency and prevent switching to Chinese
+    // Function to ensure English language on /en/ path
     function checkLanguageConsistency() {
       // Check if we are on the English page
       const currentPath = window.location.pathname;
@@ -847,38 +847,14 @@
             langBottom.textContent = '中文';
           }
         }
-      } else if (!currentPath.startsWith('/en/') && document.documentElement.lang === 'en') {
-        // If somehow we ended up on English content but URL doesn't have /en/, redirect to /en/
-        // This handles edge case where page content is English but URL is wrong
-        if (currentPath !== '/' && !currentPath.includes('.')) {
-          window.location.href = '/en/' + currentPath.substring(1);
-        }
       }
     }
     
-    // Prevent accidental navigation away from English content
+    // Simple language consistency check on load
     window.addEventListener('load', function() {
       const currentPath = window.location.pathname;
       if (currentPath.startsWith('/en/')) {
-        // If we're on an English route, ensure we stay with English content
         document.documentElement.lang = 'en';
-        
-        // Watch for any changes that might affect language
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-              // If language attribute is changed, ensure it stays as English on /en/ routes
-              if (currentPath.startsWith('/en/') && document.documentElement.lang !== 'en') {
-                document.documentElement.lang = 'en';
-              }
-            }
-          });
-        });
-        
-        observer.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ['lang']
-        });
       }
     });
     
@@ -1100,7 +1076,7 @@
     
     // Initialize when page loads
     window.addEventListener('DOMContentLoaded', function() {
-      // Ensure page language attribute is set correctly
+      // Ensure page language attribute is set correctly for /en/ path
       document.documentElement.lang = 'en';
       
       // Ensure the language switch button shows the correct language
@@ -1117,14 +1093,8 @@
         }
       }
       
-      // Check language consistency to ensure we stay on English content
-      checkLanguageConsistency();
-      
-      // Additional check to ensure we remain in English mode
-      if (window.location.pathname.startsWith('/en/')) {
-        document.documentElement.lang = 'en';
-      }
-      
+      // Since we're in /en/ path, we should behave like the default Chinese page but in English
+      // Just initialize the page without extra checks
       initPage();
     });
     
@@ -1185,23 +1155,16 @@
     // Add popstate event listener, handle browser forward/back
     window.addEventListener('popstate', function(e) {
       // Reinitialize page, display corresponding content based on new URL
-      // Ensure we maintain the correct language context
-      setTimeout(function() {
-        if (window.location.pathname.startsWith('/en/')) {
-          document.documentElement.lang = 'en';
-          checkLanguageConsistency();
-        }
-        initPage();
-      }, 0); // Use timeout to ensure DOM is ready
+      // Since we're in /en/ path, just initialize normally
+      setTimeout(initPage, 0); // Use timeout to ensure DOM is ready
     });
     
-    // Also monitor for tab visibility changes which might affect content
+    // Simple visibility change handler
     document.addEventListener('visibilitychange', function() {
       if (!document.hidden && window.location.pathname.startsWith('/en/')) {
-        // Tab becomes visible again, ensure language is still correct
+        // Tab becomes visible again
         setTimeout(function() {
           document.documentElement.lang = 'en';
-          checkLanguageConsistency();
         }, 100);
       }
     });
