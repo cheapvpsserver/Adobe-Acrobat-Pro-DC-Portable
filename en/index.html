@@ -923,10 +923,12 @@
     
     // Get current feature from URL
     function getCurrentFeature() {
-      const path = window.location.pathname.replace(/\/$/, '');
-      const parts = path.split('/');
-      const slug = parts.pop();
-      return featureData[slug];
+      let path = window.location.pathname.replace(/\/$/, ''); // 
+     
+      if (path.startsWith('/en/')) {
+        path = path.replace('/en/', '');
+      }
+      return featureData[path];
     }
     
     // Get all download buttons and options container
