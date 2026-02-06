@@ -910,8 +910,8 @@
     const downloadModal = document.getElementById('download-modal');
     const closeModal = document.getElementById('close-modal');
     
-    // Feature mapping table - data corresponding to each feature
-    const featureData = {
+    // Feature mapping table - data corresponding to each feature (English version)
+    const en_featureData = {
       'acrobat-portable-windows': {
         platform: 'windows',
         title: 'Adobe Acrobat Pro DC Portable Windows Download | Professional PDF Editing and Management Tool',
@@ -930,25 +930,25 @@
       }
     };
     
-    // Get current feature from URL
-    function getCurrentFeature() {
+    // Get current feature from URL (English version)
+    function en_getCurrentFeature() {
       const path = window.location.pathname.replace(/\/$/, '');
       // Extract slug by checking all possible patterns
       const slugMatch = path.match(/(acrobat-portable-(windows|macos))/);
       if (slugMatch) {
-        return featureData[slugMatch[1]];
+        return en_featureData[slugMatch[1]];
       }
       return null;
     }
     
-    // Get all download buttons and options container
-    const downloadButtons = document.querySelectorAll('.download-buttons .btn');
-    const downloadOptionsContainer = document.getElementById('download-options');
+    // Get all download buttons and options container (English version)
+    const en_downloadButtons = document.querySelectorAll('.download-buttons .btn');
+    const en_downloadOptionsContainer = document.getElementById('download-options');
     
-    // Dynamically generate download options
-    function generateDownloadOptions(feature) {
+    // Dynamically generate download options (English version)
+    function en_generateDownloadOptions(feature) {
       // Clear container
-      downloadOptionsContainer.innerHTML = '';
+      en_downloadOptionsContainer.innerHTML = '';
       
       // Get download links for this feature
       const links = feature.links;
@@ -964,12 +964,12 @@
           <a href="${url}" class="btn btn-blue option-btn" target="_blank" rel="noopener noreferrer nofollow">Download</a>
         `;
         
-        downloadOptionsContainer.appendChild(optionItem);
+        en_downloadOptionsContainer.appendChild(optionItem);
       }
     }
     
-    // Update page title and description
-    function updatePageInfo(feature) {
+    // Update page title and description (English version)
+    function en_updatePageInfo(feature) {
       // Update page title
       if (feature.title) {
         document.title = feature.title;
@@ -982,19 +982,19 @@
       }
     }
     
-    // Initialize page, display corresponding content based on URL
-    function initPage() {
+    // Initialize page, display corresponding content based on URL (English version)
+    function en_initPage() {
       // Force English content regardless of URL
-      const feature = getCurrentFeature();
+      const feature = en_getCurrentFeature();
       if (feature) {
         // Update page title and description
-        updatePageInfo(feature);
+        en_updatePageInfo(feature);
         
         // Highlight corresponding download button
         const button = document.querySelector(`.download-buttons .btn[data-platform="${feature.platform}"]`);
         if (button) {
           // 1. First restore all buttons to btn-outline style
-          downloadButtons.forEach(btn => {
+          en_downloadButtons.forEach(btn => {
             btn.classList.remove('btn-blue');
             btn.classList.add('btn-outline');
           });
@@ -1010,7 +1010,7 @@
             // Only one link, do not open automatically, let user click manually
           } else {
             // Multiple links, generate options and display modal
-            generateDownloadOptions(feature);
+            en_generateDownloadOptions(feature);
             downloadModal.style.display = 'block';
           }
         }
@@ -1018,10 +1018,10 @@
     }
     
     // Initialize when page loads
-    window.addEventListener('DOMContentLoaded', initPage);
+    window.addEventListener('DOMContentLoaded', en_initPage);
     
-    // Add click event to each download button
-    downloadButtons.forEach(button => {
+    // Add click event to each download button (English version)
+    en_downloadButtons.forEach(button => {
       button.addEventListener('click', function(e) {
         // Check if it's the "All Tools" button, if so do not prevent default behavior
         if (this.getAttribute('href') === 'https://all.calipertools.com') {
@@ -1036,7 +1036,7 @@
         
         // Find corresponding feature data
         const slug = `acrobat-portable-${platform}`;
-        const feature = featureData[slug];
+        const feature = en_featureData[slug];
         
         if (feature) {
           // Update page URL without refreshing page
@@ -1044,10 +1044,10 @@
           history.pushState({ slug }, feature.title, newUrl);
           
           // Update page title and description
-          updatePageInfo(feature);
+          en_updatePageInfo(feature);
           
           // Highlight corresponding download button
-          downloadButtons.forEach(btn => {
+          en_downloadButtons.forEach(btn => {
             btn.classList.remove('btn-blue');
             btn.classList.add('btn-outline');
           });
@@ -1065,7 +1065,7 @@
             window.open(firstLink, '_blank', 'noopener,noreferrer');
           } else {
             // Multiple links, generate options and display modal
-            generateDownloadOptions(feature);
+            en_generateDownloadOptions(feature);
             downloadModal.style.display = 'block';
           }
         }
@@ -1075,7 +1075,7 @@
     // Add popstate event listener, handle browser forward/back
     window.addEventListener('popstate', function(e) {
       // Reinitialize page, display corresponding content based on new URL
-      initPage();
+      en_initPage();
     });
     
     // Close modal
