@@ -659,7 +659,7 @@
   <nav>
     <div class="nav-container">
       <a href="/" class="nav-logo">
-        <img src="../images/logo.png" alt="HitPaw Screen Recorder" class="nav-logo-img">
+        <img src="/images/logo.png" alt="HitPaw Screen Recorder" class="nav-logo-img">
       </a>
       <div class="nav-menu">
         <!-- <a href="#">Home</a> -->
@@ -708,7 +708,7 @@
           <p>Adobe Acrobat Pro DC Portable runs directly without installation, taking up no system resources and leaving no registry traces. You can carry it on a USB drive or external storage device, using it on any compatible computer at any time.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/1.png" alt="No Installation Required, Portable Operation" class="feature-screenshot">
+          <img src="/images/img/1.png" alt="No Installation Required, Portable Operation" class="feature-screenshot">
         </div>
       </div>
 
@@ -719,7 +719,7 @@
           <p>Adobe Acrobat Pro DC Portable creates high-quality PDF documents from various file formats and provides powerful PDF editing features, including text modification, image editing, and page adjustment, allowing you to easily edit PDF content.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/2.png" alt="PDF Creation and Editing" class="feature-screenshot">
+          <img src="/images/img/2.png" alt="PDF Creation and Editing" class="feature-screenshot">
         </div>
       </div>
 
@@ -730,7 +730,7 @@
           <p>Adobe Acrobat Pro DC Portable offers a rich set of annotation tools, including highlights, underlines, strikethroughs, text boxes, arrows, shapes, and more, allowing you to easily mark up and comment on PDF documents, improving collaboration efficiency.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/3.png" alt="PDF Annotation and Markup" class="feature-screenshot">
+          <img src="/images/img/3.png" alt="PDF Annotation and Markup" class="feature-screenshot">
         </div>
       </div>
 
@@ -741,7 +741,7 @@
           <p>Adobe Acrobat Pro DC Portable supports creating and applying electronic signatures, allowing you to quickly sign PDF documents without printing and scanning. You can also send documents for others to sign and track signature status.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/4.png" alt="PDF Electronic Signatures" class="feature-screenshot">
+          <img src="/images/img/4.png" alt="PDF Electronic Signatures" class="feature-screenshot">
         </div>
       </div>
 
@@ -752,7 +752,7 @@
           <p>Adobe Acrobat Pro DC Portable can convert PDFs to editable formats like Word, Excel, and PowerPoint, and export other file formats to PDF. It supports batch conversion, improving work efficiency while maintaining portability.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/5.png" alt="PDF Conversion and Export" class="feature-screenshot">
+          <img src="/images/img/5.png" alt="PDF Conversion and Export" class="feature-screenshot">
         </div>
       </div>
 
@@ -763,7 +763,7 @@
           <p>Adobe Acrobat Pro DC Portable provides multiple security features, including password protection, permission settings, and sensitive information removal, ensuring the security of your PDF documents and preventing unauthorized access and modification.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/6.png" alt="Secure Document Protection" class="feature-screenshot">
+          <img src="/images/img/6.png" alt="Secure Document Protection" class="feature-screenshot">
         </div>
       </div>
 
@@ -774,7 +774,7 @@
           <p>Adobe Acrobat Pro DC Portable can be used across different devices without installation. Simply carry it on a portable storage device and run it on any Windows or macOS computer, maintaining consistent functionality and user experience.</p>
         </div>
         <div class="feature-img-wrapper">
-          <img src="../images/img/7.png" alt="Cross-device Portable Use" class="feature-screenshot">
+          <img src="/images/img/7.png" alt="Cross-device Portable Use" class="feature-screenshot">
         </div>
       </div>
     </section>
@@ -1022,6 +1022,11 @@
             en_generateDownloadOptions(feature);
             downloadModal.style.display = 'block';
           }
+        }
+      } else {
+        // If no feature found, ensure we're on the English homepage
+        if (window.location.pathname !== '/en/') {
+          window.location.href = '/en/';
         }
       }
     }
