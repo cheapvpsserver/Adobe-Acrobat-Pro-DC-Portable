@@ -830,6 +830,11 @@
   </div>
 
   <script>
+    // Force English version
+    if (!window.location.pathname.includes('/en/')) {
+      window.location.href = '/en/' + window.location.pathname;
+    }
+    
     // Add smooth scrolling effect
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
