@@ -826,6 +826,30 @@
   </div>
 
   <script>
+    // Function to check language consistency
+    function checkLanguageConsistency() {
+      // Check if we are on the English page
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith('/en/')) {
+        // We should be on an English page
+        document.documentElement.lang = 'en';
+        
+        // Force-set the language switch button state
+        const langSwitchBtn = document.getElementById('language-switch');
+        if (langSwitchBtn) {
+          langSwitchBtn.setAttribute('data-lang', 'en');
+          
+          // Update the display text to show EN on top and 中文 on bottom
+          const langTop = langSwitchBtn.querySelector('.lang-top');
+          const langBottom = langSwitchBtn.querySelector('.lang-bottom');
+          if (langTop && langBottom) {
+            langTop.textContent = 'EN';
+            langBottom.textContent = '中文';
+          }
+        }
+      }
+    }
+    
     // Add smooth scrolling effect
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -891,6 +915,19 @@
       } else {
         // Switch from Chinese to English, jump to en folder
         window.location.href = '/en/';
+      }
+    });
+    
+    // Ensure that if we're on an English page, we stay on English content
+    // Check the URL path on initial load
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith('/en/')) {
+        // We are on an English page, ensure language button shows correct state
+        const langSwitchBtn = document.getElementById('language-switch');
+        if (langSwitchBtn) {
+          langSwitchBtn.setAttribute('data-lang', 'en');
+        }
       }
     });
     
@@ -1033,6 +1070,24 @@
     window.addEventListener('DOMContentLoaded', function() {
       // Ensure page language attribute is set correctly
       document.documentElement.lang = 'en';
+      
+      // Ensure the language switch button shows the correct language
+      const langSwitchBtn = document.getElementById('language-switch');
+      if (langSwitchBtn) {
+        langSwitchBtn.setAttribute('data-lang', 'en');
+        
+        // Update the display text to show EN on top and 中文 on bottom
+        const langTop = langSwitchBtn.querySelector('.lang-top');
+        const langBottom = langSwitchBtn.querySelector('.lang-bottom');
+        if (langTop && langBottom) {
+          langTop.textContent = 'EN';
+          langBottom.textContent = '中文';
+        }
+      }
+      
+      // Check language consistency to ensure we stay on English content
+      checkLanguageConsistency();
+      
       initPage();
     });
     
