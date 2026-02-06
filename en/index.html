@@ -924,9 +924,13 @@
     // Get current feature from URL
     function getCurrentFeature() {
       const path = window.location.pathname.replace(/\/$/, '');
-      const parts = path.split('/');
-      const slug = parts.pop();
-      return featureData[slug];
+      // Check if path contains acrobat-portable patterns
+      const slugMatch = path.match(/acrobat-portable-(windows|macos)/);
+      if (slugMatch) {
+        const slug = `acrobat-portable-${slugMatch[1]}`;
+        return featureData[slug];
+      }
+      return null;
     }
     
     // Get all download buttons and options container
