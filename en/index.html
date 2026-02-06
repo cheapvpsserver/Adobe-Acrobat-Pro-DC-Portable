@@ -882,26 +882,17 @@
     });
     
     // Language switch functionality - single button click to switch
-   const langSwitchBtn = document.getElementById('language-switch');
-
-// 根据当前路径自动设置语言
-if (location.pathname.startsWith('/en')) {
-  langSwitchBtn.setAttribute('data-lang', 'en');
-} else {
-  langSwitchBtn.setAttribute('data-lang', 'zh');
-}
-
-langSwitchBtn.addEventListener('click', function() {
-  const currentLang = this.getAttribute('data-lang');
-
-  if (currentLang === 'en') {
-    // 英文 → 中文
-    window.location.href = '/';
-  } else {
-    // 中文 → 英文
-    window.location.href = '/en/';
-  }
-});
+    langSwitchBtn.addEventListener('click', function() {
+      const currentLang = this.getAttribute('data-lang');
+      
+      if (currentLang === 'en') {
+        // Switch from English to Chinese, jump to root directory
+        window.location.href = '/';
+      } else {
+        // Switch from Chinese to English, jump to en folder
+        window.location.href = '/en/';
+      }
+    });
     
     // Video player reference
     const bilibiliPlayer = document.getElementById('bilibili-player');
