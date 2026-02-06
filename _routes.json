@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "pattern": "/en/*",
+      "methods": ["GET"],
+      "dest": "/en/index.html"
+    }
+  ]
+}
