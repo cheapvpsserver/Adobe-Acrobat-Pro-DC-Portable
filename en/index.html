@@ -923,7 +923,6 @@
     
     // Get current feature from URL
     function getCurrentFeature() {
-      // Check pathname for feature slug
       const path = window.location.pathname.replace(/\/$/, '');
       const parts = path.split('/');
       const slug = parts.pop();
@@ -1034,7 +1033,7 @@
         const feature = featureData[slug];
         
         if (feature) {
-          // Update page URL without refreshing page
+          // Update page URL without refreshing page// 更新页面URL但不刷新页面
           const newUrl = `/en/${slug}`;
           history.pushState({ slug }, feature.title, newUrl);
           
