@@ -826,38 +826,6 @@
   </div>
 
   <script>
-    // Function to ensure English language on /en/ path
-    function checkLanguageConsistency() {
-      // Check if we are on the English page
-      const currentPath = window.location.pathname;
-      if (currentPath.startsWith('/en/')) {
-        // We should be on an English page
-        document.documentElement.lang = 'en';
-        
-        // Force-set the language switch button state
-        const langSwitchBtn = document.getElementById('language-switch');
-        if (langSwitchBtn) {
-          langSwitchBtn.setAttribute('data-lang', 'en');
-          
-          // Update the display text to show EN on top and 中文 on bottom
-          const langTop = langSwitchBtn.querySelector('.lang-top');
-          const langBottom = langSwitchBtn.querySelector('.lang-bottom');
-          if (langTop && langBottom) {
-            langTop.textContent = 'EN';
-            langBottom.textContent = '中文';
-          }
-        }
-      }
-    }
-    
-    // Simple language consistency check on load
-    window.addEventListener('load', function() {
-      const currentPath = window.location.pathname;
-      if (currentPath.startsWith('/en/')) {
-        document.documentElement.lang = 'en';
-      }
-    });
-    
     // Add smooth scrolling effect
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -926,19 +894,6 @@
       }
     });
     
-    // Ensure that if we're on an English page, we stay on English content
-    // Check the URL path on initial load
-    document.addEventListener('DOMContentLoaded', function() {
-      const currentPath = window.location.pathname;
-      if (currentPath.startsWith('/en/')) {
-        // We are on an English page, ensure language button shows correct state
-        const langSwitchBtn = document.getElementById('language-switch');
-        if (langSwitchBtn) {
-          langSwitchBtn.setAttribute('data-lang', 'en');
-        }
-      }
-    });
-    
     // Video player reference
     const bilibiliPlayer = document.getElementById('bilibili-player');
     
@@ -954,7 +909,6 @@
         description: 'Adobe Acrobat Pro DC Portable Windows is the Windows platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.',
         links: {
           'TeraBox': 'https://1024terabox.com/s/1a6e6yQejPozoyl3HOt7kqQ',
-          'TeraBox1': 'https://1024terabox.com/s/1a6e6yQejPozoyl3HOt7kq3',
         }
       },
       'acrobat-portable-macos': {
@@ -963,7 +917,6 @@
         description: 'Adobe Acrobat Pro DC Portable macOS is the macOS platform version of Adobe Acrobat Pro DC Portable, offering portable operation without installation, PDF creation, editing, annotation, signing, conversion, and more.',
         links: {
           'TeraBox': 'https://1024terabox.com/s/188ZnHCUazAei_2N8To7gyg',
-          'TeraBo1': 'https://1024terabox.com/s/1a6e6yQejPozoyl3HOt7kqQ3',
         }
       }
     };
@@ -1026,24 +979,6 @@
     
     // Initialize page, display corresponding content based on URL
     function initPage() {
-      // Check if we're on the English page but the URL suggests we should be in a download route
-      // If we're on /en/* and the last part of the URL is a download slug, ensure we stay on English
-      const currentPath = window.location.pathname;
-      const isEnglishPage = currentPath.startsWith('/en/');
-      
-      // Make sure language switch button shows correct state
-      const langSwitchBtn = document.getElementById('language-switch');
-      if (langSwitchBtn) {
-        langSwitchBtn.setAttribute('data-lang', 'en');
-        // Update the display text to show EN on top and 中文 on bottom
-        const langTop = langSwitchBtn.querySelector('.lang-top');
-        const langBottom = langSwitchBtn.querySelector('.lang-bottom');
-        if (langTop && langBottom) {
-          langTop.textContent = 'EN';
-          langBottom.textContent = '中文';
-        }
-      }
-      
       const feature = getCurrentFeature();
       if (feature) {
         // Update page title and description
@@ -1077,28 +1012,7 @@
     }
     
     // Initialize when page loads
-    window.addEventListener('DOMContentLoaded', function() {
-      // Ensure page language attribute is set correctly for /en/ path
-      document.documentElement.lang = 'en';
-      
-      // Ensure the language switch button shows the correct language
-      const langSwitchBtn = document.getElementById('language-switch');
-      if (langSwitchBtn) {
-        langSwitchBtn.setAttribute('data-lang', 'en');
-        
-        // Update the display text to show EN on top and 中文 on bottom
-        const langTop = langSwitchBtn.querySelector('.lang-top');
-        const langBottom = langSwitchBtn.querySelector('.lang-bottom');
-        if (langTop && langBottom) {
-          langTop.textContent = 'EN';
-          langBottom.textContent = '中文';
-        }
-      }
-      
-      // Since we're in /en/ path, we should behave like the default Chinese page but in English
-      // Just initialize the page without extra checks
-      initPage();
-    });
+    window.addEventListener('DOMContentLoaded', initPage);
     
     // Add click event to each download button
     downloadButtons.forEach(button => {
@@ -1119,10 +1033,8 @@
         const feature = featureData[slug];
         
         if (feature) {
-          // Update page URL without refreshing page
-          const currentPath = window.location.pathname;
-          // Ensure we maintain the /en/ prefix for English pages
-          const newUrl = currentPath.startsWith('/en/') ? `/en/${slug}` : `/${slug}`;
+          // Update page URL without refreshing page// 更新页面URL但不刷新页面
+          const newUrl = `/en/${slug}`;
           history.pushState({ slug }, feature.title, newUrl);
           
           // Update page title and description
@@ -1157,18 +1069,7 @@
     // Add popstate event listener, handle browser forward/back
     window.addEventListener('popstate', function(e) {
       // Reinitialize page, display corresponding content based on new URL
-      // Since we're in /en/ path, just initialize normally
-      setTimeout(initPage, 0); // Use timeout to ensure DOM is ready
-    });
-    
-    // Simple visibility change handler
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden && window.location.pathname.startsWith('/en/')) {
-        // Tab becomes visible again
-        setTimeout(function() {
-          document.documentElement.lang = 'en';
-        }, 100);
-      }
+      initPage();
     });
     
     // Close modal
