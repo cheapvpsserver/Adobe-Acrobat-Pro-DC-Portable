@@ -979,6 +979,24 @@
     
     // Initialize page, display corresponding content based on URL
     function initPage() {
+      // Check if we're on the English page but the URL suggests we should be in a download route
+      // If we're on /en/* and the last part of the URL is a download slug, ensure we stay on English
+      const currentPath = window.location.pathname;
+      const isEnglishPage = currentPath.startsWith('/en/');
+      
+      // Make sure language switch button shows correct state
+      const langSwitchBtn = document.getElementById('language-switch');
+      if (langSwitchBtn) {
+        langSwitchBtn.setAttribute('data-lang', 'en');
+        // Update the display text to show EN on top and 中文 on bottom
+        const langTop = langSwitchBtn.querySelector('.lang-top');
+        const langBottom = langSwitchBtn.querySelector('.lang-bottom');
+        if (langTop && langBottom) {
+          langTop.textContent = 'EN';
+          langBottom.textContent = '中文';
+        }
+      }
+      
       const feature = getCurrentFeature();
       if (feature) {
         // Update page title and description
@@ -1012,7 +1030,11 @@
     }
     
     // Initialize when page loads
-    window.addEventListener('DOMContentLoaded', initPage);
+    window.addEventListener('DOMContentLoaded', function() {
+      // Ensure page language attribute is set correctly
+      document.documentElement.lang = 'en';
+      initPage();
+    });
     
     // Add click event to each download button
     downloadButtons.forEach(button => {
@@ -1033,8 +1055,10 @@
         const feature = featureData[slug];
         
         if (feature) {
-          // Update page URL without refreshing page// 更新页面URL但不刷新页面
-          const newUrl = `/en/${slug}`;
+          // Update page URL without refreshing page
+          const currentPath = window.location.pathname;
+          // Ensure we maintain the /en/ prefix for English pages
+          const newUrl = currentPath.startsWith('/en/') ? `/en/${slug}` : `/${slug}`;
           history.pushState({ slug }, feature.title, newUrl);
           
           // Update page title and description
@@ -1069,7 +1093,8 @@
     // Add popstate event listener, handle browser forward/back
     window.addEventListener('popstate', function(e) {
       // Reinitialize page, display corresponding content based on new URL
-      initPage();
+      // Ensure we maintain the correct language context
+      setTimeout(initPage, 0); // Use timeout to ensure DOM is ready
     });
     
     // Close modal
